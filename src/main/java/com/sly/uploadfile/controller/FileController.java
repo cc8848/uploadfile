@@ -47,6 +47,8 @@ public class FileController {
 
         //文件上传后的路径
         String filePath = "e://test//";
+//        File saveFile = new File(request.getSession().getServletContext().getRealPath("/upload/") + saveFileName);
+
 
         //解决中文问题，linux下中文路径，图片显示问题
 //        fileName = UUID.randomUUID() + suffixName;
@@ -71,7 +73,7 @@ public class FileController {
 
     //文件下载相关代码
     @RequestMapping("/download")
-    public String downloadFile(org.apache.catalina.servlet4preview.http.HttpServletRequest request, HttpServletResponse response){
+    public String downloadFile(HttpServletRequest request, HttpServletResponse response){
         String fileName = "zk2.log";
         if (fileName != null){
             //当前是从工程的WEB-INF//FILE//下获取问价（该目录可以在下面一行代码配置）
