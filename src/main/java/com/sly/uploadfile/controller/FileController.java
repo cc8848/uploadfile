@@ -48,7 +48,7 @@ public class FileController {
         //文件上传后的路径
 //        String filePath = "e://test//";
 //        File saveFile = new File(request.getSession().getServletContext().getRealPath("/upload/") + saveFileName);
-        String filePath = request.getServletContext().getRealPath("/upload/");
+        String filePath = request.getServletContext().getRealPath("//WEB-INF//upload/");
         logger.info("上传的路径："+filePath);
 
 
@@ -134,6 +134,17 @@ public class FileController {
     @ResponseBody
     @PostMapping("/batch/upload")
     public String handleFileUpload(HttpServletRequest request){
+
+        String realPath = request.getServletContext().getRealPath("//WEB-INF//uploadmulti//");
+        logger.info("多文件上传路径："+ realPath);
+
+        File dest = new File(realPath);
+        //检测目录是否存在
+        if (!dest.exists()) {
+            dest.mkdirs();
+        }
+
+
         List<MultipartFile> files = ((MultipartHttpServletRequest)request).getFiles("file");
         MultipartFile file = null;
         BufferedOutputStream stream = null;
@@ -142,7 +153,7 @@ public class FileController {
             if(!file.isEmpty()){
                 try {
                     byte[] bytes = file.getBytes();
-                    stream = new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+                    stream = new BufferedOutputStream(new FileOutputStream(new File(realPath + file.getOriginalFilename())));
                     stream.write(bytes);
                     stream.close();
 
