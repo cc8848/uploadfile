@@ -33,7 +33,7 @@ public class FileController {
     //文件上传相关代码
     @RequestMapping(value = "upload")
     @ResponseBody
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public String upload(@RequestParam("test") MultipartFile file,HttpServletRequest request) {
         if (file.isEmpty()) {
             return "文件为空";
         }
@@ -46,8 +46,10 @@ public class FileController {
         logger.info("上传的后缀名为：" + suffixName);
 
         //文件上传后的路径
-        String filePath = "e://test//";
+//        String filePath = "e://test//";
 //        File saveFile = new File(request.getSession().getServletContext().getRealPath("/upload/") + saveFileName);
+        String filePath = request.getServletContext().getRealPath("/upload/");
+        logger.info("上传的路径："+filePath);
 
 
         //解决中文问题，linux下中文路径，图片显示问题
